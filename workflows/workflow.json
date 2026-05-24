@@ -1,0 +1,230 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "Cv_Analiz_Asistanı",
+        "formDescription": "CV dosyanızı analiz ettirmek için lütfen aşağıdaki alana yapıştırınız",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "CV_Metni",
+              "fieldType": "textarea"
+            }
+          ]
+        },
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        -112,
+        0
+      ],
+      "id": "15a7c92b-5992-4f81-892b-8cdc09e63010",
+      "name": "On form submission",
+      "webhookId": "7fc1efef-c43d-450a-a6b2-2efe5acafcae"
+    },
+    {
+      "parameters": {
+        "operation": "completion",
+        "completionTitle": "analiz sonucu",
+        "completionMessage": "=🎉 **Merhaba {{ JSON.parse($json.output).aday_ismi }}! CV Analizin Tamamlandı.**\n\n📊 **Sistem (ATS) Puanın:** {{ JSON.parse($json.output).ats_puani }} / 100\n{{ JSON.parse($json.output).puan_aciklamasi }}\n\n📌 **1. İlk İzlenim ve Profesyonellik**\n{{ JSON.parse($json.output).ilk_izlenim_ve_profesyonellik }}\n\n🤖 **2. ATS ve Anahtar Kelime Uyumu**\n{{ JSON.parse($json.output).ats_ve_anahtar_kelime }}\n\n📈 **3. Etki ve Başarı Ölçümleri (STAR Metodu)**\n{{ JSON.parse($json.output).etki_ve_basari_star }}\n\n---\n\n🚨 **Göze Çarpan Temel Sorunlar:**\n{{ JSON.parse($json.output).temel_sorunlar.map(s => '🔸 ' + s).join('\\n') }}\n\n💡 **Gelişim İçin 3 Altın Öneri:**\n{{ JSON.parse($json.output).temel_oneriler.map(o => '✅ ' + o).join('\\n') }}\n\n🚀 **Mentörün Notu:**\n{{ JSON.parse($json.output).kapanis_ve_motivasyon }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.form",
+      "typeVersion": 2.5,
+      "position": [
+        928,
+        240
+      ],
+      "id": "265b98f9-6457-475c-ba46-dfa0e1c197cf",
+      "name": "Form",
+      "webhookId": "54a52327-73de-4dde-9479-edddcf991193"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Sen dürüst, profesyonel ve yol gösterici bir İK Mentorüsün.\n\nGÖREVİN: CV'yi analiz etmek ve adaya (örneğin Zeynep veya Caner) doğrudan \"SEN\" diyerek yüz yüze tavsiyeler vermektir.\n\nHAYATİ KURALLAR:\n1. DİL: Çıktın %100 Türkçe olmalıdır. İngilizce kelimeler KESİNLİKLE YASAKTIR.\n2. KOPYA ÇEKME: Sana şema içinde verdiğim gizli talimatları ASLA ekrana yazdırma!\n3. SADECE JSON ÜRET! JSON kodunun öncesinde veya sonrasında \"İşte analiz\", \"Merhaba\" gibi TEK BİR KELİME BİLE YAZMA.\n4. MARKDOWN YASAK: Çıktını ```json ve ``` gibi markdown etiketleri içine ALMA. Doğrudan süslü parantez { ile başla ve } ile bitir.\n5. \"temel_sorunlar\" en fazla 5 madde olmalıdır. Eğer beşten fazlaysa en kritik beş temel sorunu değerlendirmeye al. Eğer beşten azsa sadece olanları yaz. Her bir sorunu 1-2 cümleyle sebep sonuç ilişkisiyle açıkla.\n6. \"temel_oneriler\" tam olarak 3 madde olmalı ve sorunların ortak çözümlerini içermelidir. Temel çözümlerin her birini amaç-sonuç cümlesiyle açıkla.\n7. Puanlama (ats_puani) 100 üzerinden bir sayı (Number) olmalıdır. \n\nÜretmen Gereken JSON Şeması:\n{\n  \"aday_ismi\": \"Adayın CV'deki adı\",\n  \"ats_puani\": Puanlama sayın,\n  \"puan_aciklamasi\": \"Neden bu ATS puanını verdiğini 1 cümleyle açıkla.\",\n  \"ilk_izlenim_ve_profesyonellik\": \"Adayın adıyla hitap ederek başla. Teknoloji sektöründe standart bir CV'den beklenen profesyonellik, netlik ve genel düzen ile adayın CV'sini kıyasla.\",\n  \"ats_ve_anahtar_kelime\": \"CV'deki teknik yetenekleri incele. İfadeler yüzeyselse, ATS'yi geçmesi için hangi spesifik teknolojileri eklemesi gerektiğini doğrudan söyle.\",\n  \"etki_ve_basari_star\": \"STAR metodunun mantığını kısaca hatırlat. Adayın başarılarını sayılarla kanıtlayıp kanıtlamadığını analiz et, sayısal veri eksikse nasıl sayısallaştırması gerektiğine dair örnek ver.\",\n  \"temel_sorunlar\": [\n    \"Sorun 1 (Sebep-sonuç ilişkisiyle)\",\n    \"Sorun 2 (Sebep-sonuç ilişkisiyle)\"\n  ],\n  \"temel_oneriler\": [\n    \"Öneri 1 (Amaç-sonuç ilişkisiyle)\",\n    \"Öneri 2 (Amaç-sonuç ilişkisiyle)\",\n    \"Öneri 3 (Amaç-sonuç ilişkisiyle)\"\n  ],\n  \"kapanis_ve_motivasyon\": \"Adayın potansiyelini öven, hedeflerine ulaşabileceğini hissettiren, çok güçlü ve motive edici bir kapanış cümlesi.\"\n}\n\nİşte Analiz Edilecek CV Metni:\n{{ $json.CV_Metni || $json.body?.CV_Metni }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        240,
+        0
+      ],
+      "id": "6d8ec21a-758a-44f8-96b2-8fde5a4ad6ac",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "gemma4:31b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        112,
+        208
+      ],
+      "id": "fb2d553f-fd15-4599-8bcd-78949211f62f",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "A7qY5HHHvgR1T835",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cv-analiz",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -112,
+        176
+      ],
+      "id": "e5436d45-4179-4213-aabb-9abbccde7626",
+      "name": "Webhook",
+      "webhookId": "b900938f-253b-4d58-a833-ebd582c5e4ea"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ JSON.parse($json.output) }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        912,
+        -272
+      ],
+      "id": "e10f0bfe-6592-4e5e-bc8f-86914d248da1",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "5c94eaf7-c26c-418a-bfda-9c030c95504f",
+              "leftValue": "={{ $('Webhook').first() ? 'Webhook' : 'Form' }}",
+              "rightValue": "Webhook",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        592,
+        0
+      ],
+      "id": "c62e13fc-35ee-4f2c-a955-5d38f1a36667",
+      "name": "If"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Form",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "3f3f00ac-1a60-4c75-8fc3-a3c30f8563c6",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "e4b15d001165eb343fa5147770faaeff4957751e414daa57fde0a6c4144162ec"
+  },
+  "id": "nSxLkdRZXEHFuMWP",
+  "tags": []
+}
