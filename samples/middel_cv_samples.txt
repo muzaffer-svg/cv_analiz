@@ -1,0 +1,23 @@
+AD SOYAD: Emre Demir
+UNVAN: Yazılım Geliştirici
+İLETİŞİM: emre.demir@email.com | github.com/emredemir
+EĞİTİM: Karadeniz Teknik Üniversitesi, Bilgisayar Mühendisliği (Mezuniyet: 2024)
+
+ÖZET:
+Yazılım geliştirmeye tutkulu, yeni teknolojileri çabuk öğrenen ve takım çalışmasına yatkın bir yazılım geliştiriciyim. Projelerin zamanında teslim edilmesine önem veririm ve temiz kod yazmaya gayret ederim.
+
+YETKİNLİKLER:
+Programlama: Java, Python, JavaScript
+Veritabanı: SQL, İlişkisel Veritabanları
+Araçlar: Git, REST API, Postman
+
+DENEYİM:
+Yazılım Geliştirici - ABC Teknoloji (Haziran 2024 - Günümüz)
+- Şirketin ana web uygulamasının arka yüz (backend) geliştirmelerini yaptım.
+- Müşteri verilerinin tutulduğu veritabanı tablolarını tasarladım ve SQL sorguları yazdım.
+- Ekip arkadaşlarımla beraber çalışarak müşterilerden gelen hataları (bug) düzelttim.
+- Yeni API uç noktaları (endpoints) ekleyerek sistemin büyümesine katkı sağladım.
+
+PROJELER:
+Kütüphane Yönetim Sistemi (Java)
+Kullanıcıların kitap ödünç alıp verebildiği, adminlerin stok takibi yapabildiği masaüstü uygulaması. Veritabanı bağlantıları kullanılarak yapılmıştır.
