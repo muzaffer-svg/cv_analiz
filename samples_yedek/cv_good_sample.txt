@@ -1,0 +1,52 @@
+ZEYNEP YILMAZ
+Junior Backend Developer
+zeynep.yilmaz.dev@email.com | İstanbul, Türkiye | github.com/zeynepdev | linkedin.com/in/zeynep-yilmaz
+
+PROFİL ÖZETİ
+Ölçeklenebilir arka yüz mimarileri ve RESTful API tasarımları konusunda deneyimli, problem çözme odaklı Yazılım Mühendisi. Node.js ve PostgreSQL kullanarak yüksek performanslı sistemler geliştirme konusunda pratik tecrübeye sahip. Mikroservis mimarilerine geçiş süreçlerinde ve bulut tabanlı (AWS) dağıtımlarda görev alarak sistem verimliliğini artırmaya odaklanmaktadır. Temiz kod (Clean Code) prensiplerine ve çevik (Agile) çalışma kültürüne tam uyumludur.
+
+TEKNİK YETKİNLİKLER
+
+Programlama Dilleri: JavaScript (ES6+), TypeScript, Python, SQL
+
+Arka Yüz & Framework'ler: Node.js, Express.js, NestJS
+
+Veritabanları: PostgreSQL, MongoDB, Redis
+
+DevOps & Araçlar: Docker, Git, GitHub Actions (CI/CD), AWS (EC2, S3), Postman
+
+DENEYİM VE PROJELER
+
+E-Ticaret Sipariş Yönetim Sistemi (Node.js & PostgreSQL) | Bireysel Proje
+
+Kullanıcıların sepet yönetimi, ödeme onayı ve sipariş takibi yapabilmesi için RESTful API mimarisi tasarlandı ve geliştirildi.
+
+PostgreSQL veritabanında karmaşık SQL sorguları optimize edilerek, veri çekme süreleri (latency) ortalama %35 oranında düşürüldü.
+
+JSON Web Token (JWT) kullanılarak güvenli kimlik doğrulama (authentication) ve rol tabanlı yetkilendirme (authorization) mekanizmaları entegre edildi.
+
+Monolitik Mimariden Mikroservislere Geçiş Simülasyonu (Docker & AWS) | Bitirme Projesi
+
+Eski monolitik bir blog uygulaması, Docker konteynerleri kullanılarak 3 farklı bağımsız mikroservise (Kullanıcı, İçerik, Yorum) bölündü.
+
+Oluşturulan konteyner imajları AWS EC2 sunucularına otomatik olarak dağıtılacak şekilde basit bir CI/CD pipeline'ı (GitHub Actions) kuruldu.
+
+Bu yapılandırma sayesinde sunucu kaynak kullanımında %20 oranında iyileşme gözlemlendi.
+
+Gerçek Zamanlı Sohbet Uygulaması (Socket.io & Redis) | Hackathon Projesi
+
+48 saatlik hackathon kapsamında, aynı anda 500+ aktif kullanıcının mesajlaşabildiği asenkron bir sohbet odası altyapısı kuruldu.
+
+Redis in-memory veritabanı kullanılarak anlık oturum (session) yönetimi sağlandı ve mesaj kayıpları sıfıra indirildi.
+
+EĞİTİM BİLGİLERİ
+
+Lisans: Ege Üniversitesi, Bilgisayar Mühendisliği (Mezuniyet: Haziran 2025)
+
+Genel Not Ortalaması (GNO): 3.65/4.00
+
+SERTİFİKALAR
+
+AWS Certified Cloud Practitioner (2024)
+
+HackerRank - Backend Development (İleri Seviye)
