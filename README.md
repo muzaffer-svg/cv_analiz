@@ -1,4 +1,4 @@
-# 🚀 AI Destekli CV Analiz Asistanı (Microservice Architecture)
+#  AI Destekli CV Analiz Asistanı (Microservice Architecture)
 
 Bu proje, sisteme yüklenen özgeçmişleri (CV) yapay zeka (LLM) ajanları aracılığıyla analiz eden, ATS (Aday Takip Sistemi) standartlarına göre puanlayan ve adaya gelişim odaklı yapılandırılmış JSON verisi sunan otomatik bir n8n iş akışıdır. 
 
@@ -6,7 +6,7 @@ Proje, hem son kullanıcılar için görsel bir arayüz (Form) hem de diğer sis
 
 ---
 
-## 🏗️ Mimari Özet ve Proje Amacı
+##  Mimari Özet ve Proje Amacı
 
 **Amaç:** İnsan kaynakları süreçlerindeki manuel CV ön eleme operasyonlarını otomatize etmek ve adaylara STAR (Durum, Görev, Eylem, Sonuç) metodolojisine dayalı, objektif teknik geri bildirimler sunmak.
 
@@ -19,7 +19,7 @@ Proje, hem son kullanıcılar için görsel bir arayüz (Form) hem de diğer sis
 
 ---
 
-## 📋 Sistem Gereksinimleri
+##  Sistem Gereksinimleri
 
 Projeyi lokal ortamınızda ayağa kaldırmak için aşağıdaki araçların kurulu olması gerekmektedir:
 - [Docker](https://www.docker.com/) ve Docker Compose
@@ -28,7 +28,7 @@ Projeyi lokal ortamınızda ayağa kaldırmak için aşağıdaki araçların kur
 
 ---
 
-## ⚙️ Kurulum ve Ayağa Kaldırma (Deployment)
+##  Kurulum ve Ayağa Kaldırma (Deployment)
 
 Proje tamamen taşınabilir (portable) olarak tasarlanmıştır. Aşağıdaki adımları takip ederek saniyeler içinde kendi lokalinizde ayağa kaldırabilirsiniz:
 
@@ -65,7 +65,7 @@ docker compose up -d
 3. Sağ üstteki seçeneklerden **"Import from File"** diyerek proje dizinindeki `workflows/workflow.json` dosyasını içeri aktarın ve akışı **Active** hale getirin.
 ---
  
-## 🧠 Sağlayıcı (Provider) Seçenekleri ve Konfigürasyon
+##  Sağlayıcı (Provider) Seçenekleri ve Konfigürasyon
  
 Bu sistem varsayılan olarak lokal ortamda çalışan **Ollama** üzerinden yapılandırılmıştır. Ancak n8n içerisindeki `AI Agent` düğümü üzerinden dilediğiniz LLM sağlayıcısına geçiş yapabilirsiniz:
  
@@ -76,11 +76,11 @@ Bu sistem varsayılan olarak lokal ortamda çalışan **Ollama** üzerinden yap�
 | **Groq (Düşük Gecikme)** | Credentials menüsünden "Groq API" seçilip API Key girilmelidir. |
 | **OpenRouter** | Base URL `https://openrouter.ai/api/v1` olarak ayarlanıp API anahtarı eklenmelidir. |
  
-> ⚠️ **Güvenlik Uyarısı:** Güvenlik politikaları gereği `workflow.json` dosyasında hiçbir API anahtarı (Credential) şifrelenmiş olsa dahi barındırılmaz. Farklı bir sağlayıcı kullanacaksanız, şifreleri n8n arayüzünden **manuel olarak yeniden tanımlamanız** gerekmektedir.
+>  **Güvenlik Uyarısı:** Güvenlik politikaları gereği `workflow.json` dosyasında hiçbir API anahtarı (Credential) şifrelenmiş olsa dahi barındırılmaz. Farklı bir sağlayıcı kullanacaksanız, şifreleri n8n arayüzünden **manuel olarak yeniden tanımlamanız** gerekmektedir.
  
 ---
  
-## 🧪 Sistemin Test Edilmesi
+##  Sistemin Test Edilmesi
  
 Sistem, if/else mantığıyla iki farklı tetikleyiciyi aynı anda dinleyecek şekilde tasarlanmıştır:
  
@@ -102,7 +102,7 @@ curl -X POST "http://localhost:5678/webhook-test/cv-analiz" \
  
 ---
  
-## 🐛 Sık Karşılaşılan Sorunlar (FAQ)
+##  Sık Karşılaşılan Sorunlar (FAQ)
  
 **Port 5678 Çakışması**
 `docker compose up` komutu port hatası veriyorsa, `.env` dosyasındaki `N8N_PORT` değerini (örn: `5679`) güncelleyip sistemi tekrar başlatın.
