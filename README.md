@@ -70,9 +70,10 @@ docker compose up -d
 Bu sistem n8n içerisindeki `AI Agent` düğümü üzerinden dilediğiniz LLM sağlayıcısına geçiş yapabileceğiniz esnek bir yapıdadır:
 
 - **Ollama (Aynı Bilgisayarda Lokal):** n8n Docker içinden bilgisayarınızdaki Ollama'ya erişecekse Base URL `http://host.docker.internal:11434` olmalıdır.
-- **Ollama (Uzak Sunucu / Bulut):** Ollama ağınızdaki başka bir cihazda veya bulutta çalışıyorsa, doğrudan o cihazın IP'sini veya URL'sini girmelisiniz (Örn: `http://192.168.1.50:11434` veya `https://sizin-sunucunuz.com`).
-- **OpenAI (ChatGPT):** Credentials menüsünden "OpenAI API" seçilip API Key girilmelidir.
-- **Groq (Düşük Gecikme):** Credentials menüsünden "Groq API" seçilip API Key girilmelidir.
+- **Ollama (Resmi Bulut / Cloud API):** Bilgisayarınızı yormadan doğrudan Ollama'nın bulut sunucularını kullanmak isterseniz:
+  1. [https://ollama.com/settings/keys](https://ollama.com/settings/keys) adresine giderek ücretsiz bir API Key oluşturun.
+  2. n8n arayüzündeki `Ollama Chat Model` düğümünde **Credentials** kısmından yeni bir bağlantı açın ve bu API Key'i girin.
+  3. **Base URL** alanına `https://api.ollama.com` adresini yazarak kaydedin.
 
 > ** Güvenlik Uyarısı:** Güvenlik politikaları gereği `workflow.json` dosyasında hiçbir API anahtarı (Credential) barındırılmaz. Şifreleri ve URL ayarlarını n8n arayüzünden manuel olarak tanımlamanız gerekmektedir.
 
