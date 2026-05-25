@@ -58,40 +58,38 @@ docker compose up -d
  
 ---
  
-## 4. İş Akışını (Workflow) Sisteme Dahil Edin
- 
-1. Tarayıcınızdan `http://localhost:5678` adresine giderek n8n arayüzüne erişin.
-2. Yeni bir iş akışı (workflow) oluşturun.
-3. Sağ üstteki seçeneklerden **"Import from File"** diyerek proje dizinindeki `workflows/workflow.json` dosyasını içeri aktarın ve akışı **Active** hale getirin.
+**4. İş Akışını (Workflow) Sisteme Dahil Edin:**
+- Tarayıcınızdan `http://localhost:5678` adresine gidin. *(Not: Eğer .env dosyasında N8N_PORT değerini değiştirdiyseniz, adrese o port numarasını yazmalısınız, örn: http://localhost:5679).*
+- n8n arayüzünde yeni, boş bir iş akışı (workflow) oluşturun.
+- Sağ üst köşedeki menüden (üç nokta simgesi) **"Import from File"** seçeneğine tıklayarak proje dizinindeki `workflows/workflow.json` dosyasını içeri aktarın.
+- Akışı kaydet (Save) butonuna basın. Eğer farklı bir yapay zeka sağlayıcısı kullanacaksanız ilgili şifreleri (Credentials) girdikten sonra akışı sağ üstten **Active** (Aktif) hale getirin.
 ---
  
-##  Sağlayıcı (Provider) Seçenekleri ve Konfigürasyon
- 
-Bu sistem varsayılan olarak lokal ortamda çalışan **Ollama** üzerinden yapılandırılmıştır. Ancak n8n içerisindeki `AI Agent` düğümü üzerinden dilediğiniz LLM sağlayıcısına geçiş yapabilirsiniz:
- 
-| Sağlayıcı | Açıklama |
-|-----------|----------|
-| **Ollama (Lokal)** | Docker içinden bilgisayarınızdaki Ollama'ya erişmek için Base URL `http://host.docker.internal:11434` olarak ayarlanmalıdır. |
-| **OpenAI (ChatGPT)** | Credentials menüsünden "OpenAI API" seçilip API Key girilmelidir. |
-| **Groq (Düşük Gecikme)** | Credentials menüsünden "Groq API" seçilip API Key girilmelidir. |
-| **OpenRouter** | Base URL `https://openrouter.ai/api/v1` olarak ayarlanıp API anahtarı eklenmelidir. |
- 
->  **Güvenlik Uyarısı:** Güvenlik politikaları gereği `workflow.json` dosyasında hiçbir API anahtarı (Credential) şifrelenmiş olsa dahi barındırılmaz. Farklı bir sağlayıcı kullanacaksanız, şifreleri n8n arayüzünden **manuel olarak yeniden tanımlamanız** gerekmektedir.
- 
+## Sağlayıcı (Provider) Seçenekleri ve Konfigürasyon
+
+Bu sistem n8n içerisindeki `AI Agent` düğümü üzerinden dilediğiniz LLM sağlayıcısına geçiş yapabileceğiniz esnek bir yapıdadır:
+
+- **Ollama (Aynı Bilgisayarda Lokal):** n8n Docker içinden bilgisayarınızdaki Ollama'ya erişecekse Base URL `http://host.docker.internal:11434` olmalıdır.
+- **Ollama (Uzak Sunucu / Bulut):** Ollama ağınızdaki başka bir cihazda veya bulutta çalışıyorsa, doğrudan o cihazın IP'sini veya URL'sini girmelisiniz (Örn: `http://192.168.1.50:11434` veya `https://sizin-sunucunuz.com`).
+- **OpenAI (ChatGPT):** Credentials menüsünden "OpenAI API" seçilip API Key girilmelidir.
+- **Groq (Düşük Gecikme):** Credentials menüsünden "Groq API" seçilip API Key girilmelidir.
+
+> ** Güvenlik Uyarısı:** Güvenlik politikaları gereği `workflow.json` dosyasında hiçbir API anahtarı (Credential) barındırılmaz. Şifreleri ve URL ayarlarını n8n arayüzünden manuel olarak tanımlamanız gerekmektedir.
+
 ---
- 
-##  Sistemin Test Edilmesi
- 
+
+## Sistemin Test Edilmesi (Testability)
+
 Sistem, if/else mantığıyla iki farklı tetikleyiciyi aynı anda dinleyecek şekilde tasarlanmıştır:
- 
+
 ### Yöntem 1: Arayüz (UI) Üzerinden İnsan Testi
- 
-n8n arayüzünde sol alttaki **Execute Workflow** butonuna tıklayın. Açılan forma `samples/` klasöründe bulunan test CV'lerinden (iyi, orta, zayıf) birini yapıştırın. Sistem size görselleştirilmiş, markdown formatında bir analiz raporu sunacaktır.
- 
+n8n arayüzünde sol alttaki **Execute Workflow** butonuna tıklayın. Açılan forma `samples/` klasöründe bulunan test CV'lerinden birini yapıştırın. Sistem size görselleştirilmiş bir analiz raporu sunacaktır.
+
 ### Yöntem 2: Webhook (API) Üzerinden Makine Testi
- 
-Sistemi diğer yazılımlarla entegre edilebilir bir mikroservis olarak test etmek için, iş akışı dinleme modundayken terminalinizden aşağıdaki cURL komutunu çalıştırın:
- 
+Sistemi bir mikroservis gibi test etmek için, iş akışı dinleme modundayken terminalinizden aşağıdaki cURL komutunu çalıştırın:
+
+*(Not: Komuttaki `5678` portunu, `.env` dosyasında belirlediğiniz kendi `N8N_PORT` değerinize göre değiştirmeyi unutmayın!)*
+
 ```bash
 curl -X POST "http://localhost:5678/webhook-test/cv-analiz" \
      -H "Content-Type: application/json" \
