@@ -103,9 +103,29 @@ curl -X POST "http://localhost:5678/webhook-test/cv-analiz" \
  
 ##  Sık Karşılaşılan Sorunlar (FAQ)
  
-**Port 5678 Çakışması**
-`docker compose up` komutu port hatası veriyorsa, `.env` dosyasındaki `N8N_PORT` değerini (örn: `5679`) güncelleyip sistemi tekrar başlatın.
+**1. Port Çakışması (Address already in use / Connection Refused)**
+- **Sorun:** Sistemi çalıştırdığınızda n8n arayüzüne ulaşamıyorsanız veya Docker kurulumda hata veriyorsa, bilgisayarınızda `5678` portunu kullanan eski bir proje açık kalmış olabilir.
+- **Çözüm:** Proje klasöründeki gizli `.env` dosyasını bir metin editörüyle açın (veya terminalden güncelleyin) ve `N8N_PORT=5679` (veya 8080 gibi boş bir sayı) yazarak kaydedin. Ardından `docker compose down` ve `docker compose up -d` komutlarıyla sistemi yeni portta başlatın.
+
+**2. Konteyner İsmi Çakışması (The container name is already in use)**
+- **Sorun:** Başlatma komutunu verdiğinizde *"The container name '/n8n_cv_projesi' is already in use"* hatası alıyorsanız, arka planda çalışan veya takılı kalan eski bir proje var demektir.
+
+- **Çözüm A (Eski Sistemi Silip Yeniden Kurmak İsteyenler İçin):**
+  Sistemi temizlemek ve takılı kalan konteyneri zorla silmek için terminale şu komutu yazın:
+  ```bash
+  docker rm -f n8n_cv_projesi
+  ```
+
+- **Çözüm B (Aynı Anda 2 Farklı Projeyi Paralel Çalıştırmak İsteyenler İçin):**
+Eski sisteminizi kapatmadan veya silmeden, test amaçlı yepyeni bir bağımsız sistem daha açmak istiyorsanız şu 3 değişikliği yapmalısınız:
+1. Projeyi bilgisayarınızda **farklı isimli yeni bir klasöre** kopyalayın (Örn: `cv_analiz_test2`).
+2. Yeni klasördeki `.env` dosyasını açıp portu değiştirin (Örn: `N8N_PORT=5679`).
+3. Yeni klasördeki `docker-compose.yml` dosyasını açıp `container_name: n8n_cv_projesi` satırını benzersiz bir isimle değiştirin (Örn: `container_name: n8n_cv_projesi_2`).
+
+*Not: Eğer sadece adı değiştirip portu ve klasörü ayırmazsanız, konteynerler çakışacak veya arka planda gereksiz RAM tüketecektir.*
  
+
+
 **Webhook "Invalid JSON" Hatası**
 API üzerinden istek attığınızda bu hatayı alıyorsanız, `Respond to Webhook` düğümünde arayüz (form) için hazırlanmış emojili metnin kalıp kalmadığını kontrol edin. Webhook çıkışında Body kısmı yalnızca aşağıdaki formatta olmalıdır:
  
